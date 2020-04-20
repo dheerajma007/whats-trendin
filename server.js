@@ -12,4 +12,6 @@ app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'client/build/index.html'));
 });
 
-app.listen(8080);
+const port = process.env.PORT || 8080;
+app.listen(port);
+console.log(`Whats-Trendin listening on ${port}`);
