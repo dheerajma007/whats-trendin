@@ -1,28 +1,45 @@
 import React, { Component } from 'react';
 import { Card } from 'semantic-ui-react';
-import logo from './logo.svg';
 import './App.css';
 import CardExampleContentBlock from './Card';
 
 class App extends Component {
-  state = { text : "sample"};
+  constructor(props) {
+    super();
+    this.state = {
+      twitterTrend : []
+    };
+}
 
   componentDidMount(){
-    fetch('/welcome')
-    .then(res => res.text())
-    .then(resText => this.setState({ text:resText }));
+    fetch('/twitter')
+    .then(res => res.json())
+    .then(resText => this.setState({ twitterTrend:resText }));
   }
 
   render() {
-    const { text } = this.state;
+    const { twitterTrend } = this.state.twitterTrend;
+    console.log(twitterTrend);
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Welcome to whats-trendin!</h1>
         </header>
         <div className="Card-block">
-          <CardExampleContentBlock/>
+        <Card>
+          <Card.Content>
+            <Card.Header>Twitter</Card.Header>
+          </Card.Content>
+          <Card.Content>
+            <ul>
+              {this.state.twitterTrend.map(trend => (<li><a href={trend.url}>{trend.name}</a></li>))}
+            </ul>
+          </Card.Content>
+        </Card>
         </div>
+        {/*<div className="Card-block">
+          <CardExampleContentBlock/>
+        </div> */}
       </div>
     )
   }
