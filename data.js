@@ -1,5 +1,6 @@
 const request = require('request-promise');
 const woeid = require('woeid');
+const cache = require('./cache');
 
 async function getTwitterData(country){
     if(!country){
@@ -9,17 +10,26 @@ async function getTwitterData(country){
         country = woeid.getWoeid(country).woeid;
     }
     try{
-        var tokenResponse = await getToken();
-        var token = JSON.parse(tokenResponse).access_token;
+        var token = cache.get('TOKEN');
+        if(!token){
+            var tokenResponse = await getToken();
+            token = JSON.parse(tokenResponse).access_token;
 
-        var twitterTrendResponse = await getTwitterTrend(country, token);
-        var trends = JSON.parse(twitterTrendResponse)[0].trends;
-        var result = [];
-        for(var i = 0; i <= 4; i++){
-            result.push({name:trends[i].name, url:trends[i].url, count:trends[i].tweet_volume});
+            cache.put('TOKEN', token, 55 * 60 * 1000); //token life is 1hr. But caching it for 55mins.
         }
 
-        console.log(result);
+        var result = cache.get('TWITTER_TREND_'+country);
+        if(!result){
+            var twitterTrendResponse = await getTwitterTrend(country, token);
+            var trends = JSON.parse(twitterTrendResponse)[0].trends;
+            result = [];
+            for(var i = 0; i <= 4; i++){
+                result.push({name:trends[i].name, url:trends[i].url, count:trends[i].tweet_volume});
+            }
+            console.debug(result);
+
+            cache.put('TWITTER_TREND_'+country, result, 60 * 60 * 1000);
+        }
         return {status:200, body:result};
     }
     catch(e){
@@ -29,6 +39,7 @@ async function getTwitterData(country){
 };
 
 function getToken(){
+    console.log("Getting token");
     var credBasic = process.env.TWITTER_API_KEY + ':' + process.env.TWITTER_API_SECRET;
     
     var tokenRequest = {
@@ -43,6 +54,7 @@ function getToken(){
 }
 
 function getTwitterTrend(country, token){
+    console.log("Calling twitter API");
     var trendRequest = {
         uri : 'https://api.twitter.com/1.1/trends/place.json',
         qs : {
