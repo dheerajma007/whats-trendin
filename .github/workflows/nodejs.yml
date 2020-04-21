@@ -28,7 +28,9 @@ jobs:
       working-directory: ./client
     - run: npm run build --if-present
       working-directory: ./client
+      env:
+        CI: false #changed to false because of issue https://github.community/t5/GitHub-Actions/Treating-warnings-as-errors-because-process-env-CI-true/m-p/52604
     - run: npm test
       working-directory: ./client
       env:
-        CI: true
+        CI: false #changed to false because of issue https://github.community/t5/GitHub-Actions/Treating-warnings-as-errors-because-process-env-CI-true/m-p/52604
