@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Card } from 'semantic-ui-react';
 import logo from './logo.svg';
 import './App.css';
+import CardExampleContentBlock from './Card';
 
 class App extends Component {
   state = { text : "sample"};
@@ -16,10 +18,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to whats-trendin!</h1>
         </header>
-        <p className="App-into">{text}</p>
+        <div className="Card-block">
+          <CardExampleContentBlock/>
+        </div>
       </div>
     )
   }
