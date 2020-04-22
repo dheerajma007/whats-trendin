@@ -3,11 +3,15 @@ const woeid = require('woeid');
 const cache = require('./cache');
 
 async function getTwitterData(country){
+    var countryName;
     if(!country){
         country = '1';
+        countryName = 'World'
     }
     else{
-        country = woeid.getWoeid(country).woeid;
+        let countryWoeid = woeid.getWoeid(country);
+        country = countryWoeid.woeid;
+        countryName = countryWoeid.country;
     }
     try{
         var token = cache.get('TOKEN');
@@ -30,7 +34,7 @@ async function getTwitterData(country){
 
             cache.put('TWITTER_TREND_'+country, result, 60 * 60 * 1000);
         }
-        return {status:200, body:result};
+        return {status:200, body:{country:countryName, data: result}};
     }
     catch(e){
         console.error(e);

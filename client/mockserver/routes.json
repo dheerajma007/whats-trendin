@@ -1,0 +1,4 @@
+{
+    "/twitter" : "/twitter",
+    "/twitter\\?country=IN" : "/twitterIN"
+}
