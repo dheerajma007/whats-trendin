@@ -1,0 +1,52 @@
+.Cards-container{
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 700px){
+    .Cards-container{
+        flex-direction: column;
+    }
+}
+
+.Card-ui{
+    margin: 1em !important;
+    font-family: 'Montserrat' !important;
+}
+
+.Card-header{
+    text-align: center;
+}
+
+.Card-country{
+    text-transform: uppercase;
+    font-size: calc(10px + 2vmin) !important;
+}
+
+.Card-trend{
+    font-family: 'Montserrat' !important;
+    font-weight: 600 !important;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+/* unvisited link */
+a:link {
+    color: black;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: black;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: blue;
+  }
+  
+  /* selected link */
+  a:active {
+    color: blue;
+  }
