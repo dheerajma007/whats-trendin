@@ -22,19 +22,21 @@ async function getTwitterData(country){
             cache.put('TOKEN', token, 55 * 60 * 1000); //token life is 1hr. But caching it for 55mins.
         }
 
-        var result = cache.get('TWITTER_TREND_'+country);
-        if(!result){
+        var data = cache.get('TWITTER_TREND_'+country);
+        if(!data){
             var twitterTrendResponse = await getTwitterTrend(country, token);
+            var timestamp = new Date().getTime();
             var trends = JSON.parse(twitterTrendResponse)[0].trends;
-            result = [];
+            var result = [];
             for(var i = 0; i <= 4; i++){
                 result.push({name:trends[i].name, url:trends[i].url, count:trends[i].tweet_volume});
             }
-            console.debug(result);
+            data = {result:result, timestamp:timestamp};
+            console.debug(data);
 
-            cache.put('TWITTER_TREND_'+country, result, 60 * 60 * 1000);
+            cache.put('TWITTER_TREND_'+country, data, 60 * 60 * 1000);
         }
-        return {status:200, body:{country:countryName, data: result}};
+        return {status:200, body:{country:countryName, data: data.result, lastUpdated:data.timestamp}};
     }
     catch(e){
         console.error(e);
