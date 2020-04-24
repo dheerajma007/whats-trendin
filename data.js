@@ -33,6 +33,8 @@ async function getTwitterData(country){
             }
             data = {result:result, timestamp:timestamp};
             console.debug(data);
+            console.log('As of ', JSON.parse(twitterTrendResponse)[0].as_of);
+            console.log('Created at ', JSON.parse(twitterTrendResponse)[0].created_at);
 
             cache.put('TWITTER_TREND_'+country, data, 15 * 60 * 1000);
         }
