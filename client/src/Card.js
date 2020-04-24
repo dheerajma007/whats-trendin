@@ -11,6 +11,30 @@ function getCountText(count) {
   }
 }
 
+function getLastUpdated(timestamp) {
+  var timeText = "";
+  var currentTime = new Date().getTime(); //UTC timestamp
+  var diff = (currentTime - timestamp);
+  diff = diff/1000;
+  if(diff < 60){
+    timeText = 'few seconds';
+  }
+  else if(diff < 60 * 60){
+    var minutes = Math.floor(diff/60);
+    timeText = minutes + ' minute' + (minutes>1?'s':'');
+  }
+  else if(diff < 60 * 60 * 24){
+    var hours = Math.floor(diff/(60*60));
+    timeText = hours + ' hour' + (hours>1?'s':'');
+  }
+  else{
+    var days = Math.floor(diff/(60*60*24));
+    timeText = days + ' day' + (days>1?'s':'');
+  }
+
+  return 'Updated ' + timeText + ' ago';
+}
+
 const CardBlock = ( props ) => {
   return(
     <div className="Cards-container">
@@ -19,6 +43,7 @@ const CardBlock = ( props ) => {
             <Card key={item.country} className="Card-ui">
               <Card.Content className="Card-header">
                 <Card.Header className="Card-country">{item.country}</Card.Header>
+                <Card.Meta>{getLastUpdated(item.lastUpdated)}</Card.Meta>
               </Card.Content>
                 <div className="Card-row">
                   <div className="Card-column-left">
