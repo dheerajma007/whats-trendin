@@ -66,7 +66,8 @@ function getTwitterTrend(country, token){
     var trendRequest = {
         uri : 'https://api.twitter.com/1.1/trends/place.json',
         qs : {
-            id : country
+            id : country,
+            blah : '123'
         },
         method : 'GET',
         headers : {
