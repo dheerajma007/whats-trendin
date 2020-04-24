@@ -34,7 +34,7 @@ async function getTwitterData(country){
             data = {result:result, timestamp:timestamp};
             console.debug(data);
 
-            cache.put('TWITTER_TREND_'+country, data, 60 * 60 * 1000);
+            cache.put('TWITTER_TREND_'+country, data, 15 * 60 * 1000);
         }
         return {status:200, body:{country:countryName, data: data.result, lastUpdated:data.timestamp}};
     }
