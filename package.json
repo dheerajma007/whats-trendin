@@ -4,7 +4,8 @@
     "description": "Whats-Trendin",
     "main": "server.js",
     "scripts": {
-        "start": "node server.js",
+        "build-client": "cd client && npm install && npm run build",
+        "start": "npm install &&  npm run build-client && node server.js",
         "local": "node -r dotenv/config server.js",
         "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
         "test": "echo \"Error: no test specified\" && exit 1"
