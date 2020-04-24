@@ -41,9 +41,9 @@ class Cache{
     }
 
     get(key){
-        console.debug("Getting data from cache");
         let data = this._cache[key];
         if(data){
+            console.debug("Getting data from cache");
             return data.value;
         }
 

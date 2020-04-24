@@ -28,7 +28,30 @@
     font-family: 'Montserrat' !important;
     font-weight: 600 !important;
     margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
     text-decoration: none;
+}
+
+.Card-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+  
+.Card-column-left {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 75%;
+}
+
+.Card-column-right {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    width: 25%;
 }
 
 /* unvisited link */
